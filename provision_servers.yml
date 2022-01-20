@@ -3,6 +3,7 @@
   hosts: localhost
   connection: local
   gather_facts: no
+  become: no
 
   roles:
     - os_server
@@ -24,6 +25,7 @@
   hosts: osp_instances
   connection: local
   gather_facts: no
+  become: yes
 
   pre_tasks:
     - name: Configure DNS
