@@ -16,13 +16,16 @@
     - name: Add OpenStack instances to in-memory inventory
       add_host:
         name: "{{ item.name }}"
-        group: osp_instances
+        group: "{{ item.metadata.AnsibleGroup }}"
         ansible_host: "{{ item.private_v4 }}" 
-      when: item.metadata.AnsibleGroup == "osp_instances"
+      when: item.metadata.AnsibleGroup is defined
       loop: "{{ os_instances.openstack_servers }}"
 
 - name: Play to configure OpenStack servers
-  hosts: osp_instances
+  hosts:
+    - load_balancers
+    - app_servers
+    - database_servers
   connection: local
   gather_facts: no
   become: yes
