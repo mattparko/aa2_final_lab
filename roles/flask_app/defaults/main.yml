@@ -1,8 +1,5 @@
 ---
-firewall_services:
-  - http
-firewall_ports:
-  - 8080/tcp
+# defaults file for flask_app
 
 flask_app_name: resource_hub
 flask_user: flask

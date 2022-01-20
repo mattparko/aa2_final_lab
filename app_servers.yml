@@ -4,6 +4,10 @@
   gather_facts: yes
   become: yes
 
+  tags:
+    - application_servers
+    - flask
+
   roles:
     - firewall
     - flask_app

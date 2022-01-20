@@ -1,6 +1,6 @@
 ---
 - import_playbook: provision_servers.yml
 - import_playbook: database_servers.yml
-#- import_playbook: app_servers.yml
+- import_playbook: app_servers.yml
 #- import_playbook: load_balancers.yml
 #- import_playbook: smoke_tests.yml

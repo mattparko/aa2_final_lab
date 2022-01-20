@@ -7,7 +7,7 @@
 
   tags:
     - database_servers
-    - app_servers
+    - application_servers
     - load_balancers
 
   roles:
@@ -39,7 +39,7 @@
 
   tags:
     - database_servers
-    - app_servers
+    - application_servers
     - load_balancers
 
   pre_tasks:
