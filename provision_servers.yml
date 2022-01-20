@@ -5,6 +5,11 @@
   gather_facts: no
   become: no
 
+  tags:
+    - database_servers
+    - app_servers
+    - load_balancers
+
   roles:
     - os_server
 
@@ -31,6 +36,11 @@
     - database_servers
   gather_facts: no
   become: yes
+
+  tags:
+    - database_servers
+    - app_servers
+    - load_balancers
 
   pre_tasks:
     - name: Configure DNS
