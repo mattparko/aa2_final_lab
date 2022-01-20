@@ -1,0 +1,29 @@
+---
+# tasks file for firewall
+
+- name: Ensure firewalld is installed
+  yum:
+    name: firewalld
+    state: installed
+   
+- name: Ensure firewalld is started and enabled
+  service:
+    name: firewalld
+    enabled: yes
+    state: started
+    
+- name: Ensure firewall services are open
+  firewalld:
+    service: "{{ item }}"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  loop: "{{ firewall_services }}"
+
+- name: Ensure firewall ports are open
+  firewalld:
+    port: "{{ item }}"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  loop: "{{ firewall_ports }}"
