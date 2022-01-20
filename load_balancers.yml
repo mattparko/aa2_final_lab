@@ -1,8 +1,11 @@
 ---
 - name: Play to configure application servers
   hosts: load_balancers
-  gather_facts: yes
+  gather_facts: no
   become: yes
+
+  tags:
+    - load_balancers
 
   roles:
     - firewall
