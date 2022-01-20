@@ -1,0 +1,8 @@
+---
+# defaults file for register_satellite
+
+register_satellite_info:
+  server: satellite.example.com
+  activation_key: my_ak
+  organisation: prod
+  katello_cert: http://satellite.example.com/pub/katello-ca-consumer-latest.noarch.rpm
