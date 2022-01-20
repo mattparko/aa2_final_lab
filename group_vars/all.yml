@@ -8,22 +8,22 @@ os_server_cloud: "{{ guid }}-project"
 os_server_instance_details:
   - name: app1
     image: rhel-8.3
-    key_name: "{{ guid }}--keypair"
-    flavor: GLOBAL-CPU_4_Memory_8192_Disk_30_flavor
-    security_groups:
-      - "{{ guid }}--HostSG"
-    nics:
-      - net-name: "{{ guid }}--dev-network"
-    meta:
-      AnsibleGroup: osp_instances
-  - name: app2
-    image: rhel-8.3
-    key_name: "{{ guid }}--keypair"
+    key_name: "{{ guid }}-keypair"
     flavor: GLOBAL-CPU_4_Memory_8192_Disk_30_flavor
     security_groups:
       - "{{ guid }}-HostSG"
     nics:
-      - net-name: "{{ guid }}--dev-network"
+      - net-name: "{{ guid }}-dev-network"
+    meta:
+      AnsibleGroup: osp_instances
+  - name: app2
+    image: rhel-8.3
+    key_name: "{{ guid }}-keypair"
+    flavor: GLOBAL-CPU_4_Memory_8192_Disk_30_flavor
+    security_groups:
+      - "{{ guid }}-HostSG"
+    nics:
+      - net-name: "{{ guid }}-dev-network"
     meta:
       AnsibleGroup: osp_instance
 
