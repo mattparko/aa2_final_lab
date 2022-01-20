@@ -1,0 +1,53 @@
+---
+- name: Play to provision OpenStack servers
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  vars:
+    guid: d96a
+
+  roles:
+    - role: os_server
+      vars:
+        os_server_cloud: "{{ guid }}-project"
+        os_server_instance_details:
+          - name: app1
+            image: rhel-8.3
+            key_name: "{{ guid }}--keypair"
+            flavor: GLOBAL-CPU_4_Memory_8192_Disk_30_flavor
+            security_groups:
+              - "{{ guid }}--HostSG"
+            nics:
+              - net-name: "{{ guid }}--dev-network"
+            meta:
+              AnsibleGroup: osp_instances
+  tasks:
+    - name: Gather OpenStack server details
+      os_server_info:
+        cloud: "{{ guid }}-project"
+      register: os_instances
+
+    - name: Add OpenStack instances to in-memory inventory
+      add_host:
+        name: "{{ item.name }}"
+        group: osp_instances
+        ansible_host: "{{ item.private_v4 }}" 
+      when: item.metadata.AnsibleGroup == "osp_instances"
+      loop: "{{ os_instances.openstack_servers }}"
+
+- name: Play to configure OpenStack servers
+  hosts: osp_instances
+  connection: local
+  gather_facts: no
+
+  roles:
+    - role: register_satellite
+      vars:
+        register_satellite_info:
+          server: satellite.example.com
+          activation_key: gpte-labs-rhel8
+          organisation: prod
+          katello_cert: http://satellite.example.com/pub/katello-ca-consumer-latest.noarch.rpm
+
+        

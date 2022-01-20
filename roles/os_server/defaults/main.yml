@@ -1,0 +1,16 @@
+---
+# defaults file for os_server
+
+os_cloud: my-cloud
+
+os_server_instance_details:
+  - name: server1
+    image: rhel8
+    key_name: my-keypair
+    flavor: my-flavor
+    security_groups:
+      - my-sg-1
+    nics:
+      - net-name: my-network-1
+    meta:
+      group: testservers
