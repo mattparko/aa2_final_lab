@@ -28,7 +28,6 @@
     - load_balancers
     - app_servers
     - database_servers
-  connection: local
   gather_facts: no
   become: yes
 
