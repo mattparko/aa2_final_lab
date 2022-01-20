@@ -20,6 +20,8 @@
         ansible_host: "{{ item.private_v4 }}" 
       when: item.metadata.AnsibleGroup is defined
       loop: "{{ os_instances.openstack_servers }}"
+      loop_control:
+        label: "{{ item.name }}"
 
 - name: Play to configure OpenStack servers
   hosts:
