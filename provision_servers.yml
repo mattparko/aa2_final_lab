@@ -7,6 +7,7 @@
 
   roles:
     - os_server
+
   tasks:
     - name: Gather OpenStack server details
       openstack.cloud.server_info:

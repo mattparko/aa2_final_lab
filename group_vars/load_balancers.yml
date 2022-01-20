@@ -1,0 +1,8 @@
+---
+firewall_services:
+  - http
+firewall_ports:
+  - 5000/tcp
+
+load_balancer_packages:
+  - haproxy
