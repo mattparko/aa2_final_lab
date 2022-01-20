@@ -6,7 +6,6 @@
 
   roles:
     - os_server
-
   tasks:
     - name: Gather OpenStack server details
       os_server_info:
@@ -26,6 +25,22 @@
   connection: local
   gather_facts: no
 
+  pre_tasks:
+    - name: Configure DNS
+      lineinfile:
+        path: /etc/sysconfig/network-scripts/ifcfg-eth0
+        line: "{{ item }}"
+        state: present
+      loop:
+        - PEERDNS=no
+        - DNS1={{ dns_nameserver }}
+      notify: restart_network
+
   roles:
     - register_satellite
-        
+
+  handlers:
+    - name: restart_network
+      service:
+        name: NetworkManager
+        state: restarted
