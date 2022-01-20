@@ -13,4 +13,4 @@
     wait: yes
     nics: "{{ item.nics }}"
     meta: "{{ item.meta }}"
-  loop: "{{ os_servers }}"
+  loop: "{{ os_server_instance_details }}"
