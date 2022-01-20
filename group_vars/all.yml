@@ -15,7 +15,7 @@ os_server_instance_details:
     nics:
       - net-name: "{{ guid }}-dev-network"
     meta:
-      AnsibleGroup: osp_instances
+      AnsibleGroup: app_servers
   - name: app2
     image: rhel-8.3
     key_name: "{{ guid }}-keypair"
@@ -25,7 +25,27 @@ os_server_instance_details:
     nics:
       - net-name: "{{ guid }}-dev-network"
     meta:
-      AnsibleGroup: osp_instance
+      AnsibleGroup: app_servers
+  - name: frontend1
+    image: rhel-8.3
+    key_name: "{{ guid }}-keypair"
+    flavor: GLOBAL-CPU_4_Memory_8192_Disk_30_flavor
+    security_groups:
+      - "{{ guid }}-HostSG"
+    nics:
+      - net-name: "{{ guid }}-dev-network"
+    meta:
+      AnsibleGroup: load_balancers
+  - name: appdb1
+    image: rhel-8.3
+    key_name: "{{ guid }}-keypair"
+    flavor: GLOBAL-CPU_4_Memory_8192_Disk_30_flavor
+    security_groups:
+      - "{{ guid }}-HostSG"
+    nics:
+      - net-name: "{{ guid }}-dev-network"
+    meta:
+      AnsibleGroup: database_servers
 
 # Satellite vars
 register_satellite_info:
