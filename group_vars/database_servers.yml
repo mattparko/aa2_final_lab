@@ -1,6 +1,6 @@
 ---
 firewall_services:
-  - mysql
+  - postgresql
 
 postgres_yum_module: "postgresql:12"
 
