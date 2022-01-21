@@ -1,5 +1,5 @@
 ---
-- name: Play to configure application servers
+- name: Install and configure database servers
   hosts: database_servers
   gather_facts: no
   become: yes

@@ -8,7 +8,7 @@
   become: no
 
   tasks:
-    - name: Delete OpenStack instance
+    - name: Delete OpenStack instances
       os_server:
         name: "{{ inventory_hostname }}"
         state: absent

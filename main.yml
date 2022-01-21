@@ -1,4 +1,8 @@
 ---
+# This playbook is for manual testing outside of Ansible Tower.
+# If executing manually, ensure you uncomment the "cloud"
+# parameters in all OpenStack tasks
+
 - import_playbook: provision_servers.yml
 - import_playbook: database_servers.yml
 - import_playbook: app_servers.yml

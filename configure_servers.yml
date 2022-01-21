@@ -1,5 +1,5 @@
 ---
-- name: Configure OpenStack servers
+- name: Base configuration of OpenStack instances
   hosts:
     - load_balancers
     - app_servers
