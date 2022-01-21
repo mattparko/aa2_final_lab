@@ -1,0 +1,33 @@
+---
+- name: Configure OpenStack servers
+  hosts:
+    - load_balancers
+    - app_servers
+    - database_servers
+  gather_facts: no
+  become: yes
+
+  tags:
+    - database_servers
+    - application_servers
+    - load_balancers
+
+  pre_tasks:
+    - name: Configure DNS
+      lineinfile:
+        path: /etc/sysconfig/network-scripts/ifcfg-eth0
+        line: "{{ item }}"
+        state: present
+      loop:
+        - PEERDNS=no
+        - DNS1={{ dns_nameserver }}
+      notify: restart_network
+
+  roles:
+    - register_satellite
+
+  handlers:
+    - name: restart_network
+      service:
+        name: NetworkManager
+        state: restarted
