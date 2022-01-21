@@ -4,12 +4,12 @@
 - name: Install Katello CA cert
   yum:
     name: "{{ register_satellite_info.katello_cert }}"
-    state: installed
+    state: present
     disable_gpg_check: yes
 
 - name: Register with Satellite server
   redhat_subscription:
     activationkey: "{{ register_satellite_info.activation_key }}"
     org_id: "{{ register_satellite_info.organisation }}"
-    auto_attach: true
+    auto_attach: yes
     state: present
