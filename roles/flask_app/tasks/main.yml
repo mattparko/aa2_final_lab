@@ -8,27 +8,23 @@
 
 - name: Install flask packages
   package:
-    name: "{{ __package }}"
+    name: "{{ app_yum_packages }}"
     state: present
-  loop: "{{ app_yum_packages }}"        
-  loop_control:
-    loop_var: __package
 
-- name: "Install flask repo {{ flask_repo }}"
+- name: Install flask repo {{ flask_repo }}
   git:
     repo: "{{ flask_repo }}"
     dest: "{{ flask_home }}/{{ flask_app_name }}"
-    update: yes 
+    update: yes
     force: yes
-  tags:
-    - git
+  notify: restart_flask_app
 
-- name: "Change flask repo owner to {{ flask_user }} recursively"      
+- name: Change flask repo owner to {{ flask_user }} recursively
   file: 
     dest: "{{ flask_home }}/{{ flask_app_name }}"
     owner: "{{ flask_user }}"
 
-- name: Virtualenv setup
+- name: Setup Flask virtualenv
   block:
     - name: Setup pre-requisite pip3 packages
       pip:
@@ -36,34 +32,33 @@
         state: latest
         executable: /usr/bin/pip3
 
-    - name: "Create virtualenv {{ virtualenv_name }} for Flask"
+    - name: Create virtualenv {{ virtualenv_name }} for Flask
       pip:
         requirements: "{{ flask_home }}/{{ flask_app_name }}/requirements.txt"
         virtualenv: "{{ virtualenv_home }}/{{ flask_app_name }}"
         virtualenv_site_packages: no
         virtualenv_command: /usr/local/bin/virtualenv
-  tags:
-    - venv
-    - virtualenv  
-      
+
 - name: Initialize flask app database resources
   command: "{{ virtualenv_home }}/{{ flask_app_name }}/bin/python3 {{ flask_home }}/{{ flask_app_name }}/config.py"
   run_once: true
 
-- name: "Generate {{ flask_app_name }} startup script"    
+- name: Generate {{ flask_app_name }} startup script
   template:
     src: launch_resource_hub.j2
-    dest: /usr/local/bin/launch_resource_hub   
+    dest: /usr/local/bin/launch_resource_hub
     mode: '0555'
+  notify: restart_flask_app
 
-- name: template systemd service config
+- name: Template systemd service config
   template:
     src: flask_service.j2
     dest: /etc/systemd/system/{{ flask_app_name }}.service
     mode: '0755'
+  notify: restart_flask_app
 
-- name: start systemd app service
+- name: Enable and start systemd app service
   systemd: 
     name: "{{ flask_app_name }}.service"
-    state: restarted 
+    state: started 
     enabled: yes

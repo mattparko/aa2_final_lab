@@ -1,2 +1,7 @@
 ---
 # handlers file for flask_app
+
+- name: restart_flask_app
+  systemd: 
+    name: "{{ flask_app_name }}.service"
+    state: restarted 
