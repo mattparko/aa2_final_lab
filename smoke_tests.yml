@@ -25,6 +25,7 @@
   hosts: app_servers
   become: no
   gather_facts: no
+
   tags:
     - smoketest  
 
