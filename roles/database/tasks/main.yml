@@ -4,16 +4,18 @@
 - name: Enable correct postgress AppStream module
   shell: yum -y module enable postgresql:12
 
+- name: Set up Postgres repo
+  package:
+    name: "{{ postgres_repo }}"
+    disable_gpg_check: yes
+    state: present
+
 - name: Install Postgres packages
   package:
-    name: "{{ __package }}"
+    name:
+      - "{{ postgres_packages }}"
+      - "{{ postgres_library }}"
     state: present
-  loop: 
-    - "{{ postgres_repo }}"
-    - "{{ postgres_packages }}"
-    - "{{ postgres_library }}"
-  loop_control:
-    loop_var: __package
 
 - name: Check if Postgres initialized
   stat:
