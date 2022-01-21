@@ -1,8 +1,10 @@
 ---
+flask_port: "8080"
+
 firewall_services:
   - http
 firewall_ports:
-  - 8080/tcp
+  - "{{ flask_port }}/tcp"
 
 flask_app_name: resource_hub
 flask_user: flask

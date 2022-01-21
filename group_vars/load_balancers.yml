@@ -1,4 +1,6 @@
 ---
+load_balancer_port: 80
+
 firewall_services:
   - http
 firewall_ports:
