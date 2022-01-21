@@ -13,6 +13,10 @@
     - load_balancers
 
   pre_tasks:
+    - name: Wait until servers are reachable
+      wait_for_connection:
+        timeout: 300
+
     - name: Configure DNS
       lineinfile:
         path: /etc/sysconfig/network-scripts/ifcfg-eth0
